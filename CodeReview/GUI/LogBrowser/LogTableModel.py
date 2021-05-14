@@ -30,7 +30,7 @@ from PyQt5.QtCore import Qt
 
 ####################################################################################################
 
-from CodeReview.Tools.EnumFactory import EnumFactory
+from CodeReview.Common.EnumFactory import EnumFactory
 
 ####################################################################################################
 
@@ -82,9 +82,10 @@ class LogTableModel(QtCore.QAbstractTableModel):
         super().__init__()
 
         self._tags = repository.tags
-        commits = repository.commits
-        self._number_of_rows = len(commits)
+        commits = repository.commits_for_head
         self._rows = [('', 'Working directory changes', '', '', None)]
+        commits = list(commits)
+        self._number_of_rows = len(commits)
         for i, commit in enumerate(commits):
             row = self._commit_data(i, commit)
             self._rows.append(row)
